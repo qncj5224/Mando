@@ -1,8 +1,8 @@
 /*
-2Â÷¿ø ¹è¿­ ±â¸» 50 Áß°£ 30 °úÁ¦ 20 ÃÑÁ¡À» ±¸ÇÑ µÚ µî¼ö ±¸ÇÏ±â
-1) ÃÑÁ¡À» ³»¸²Â÷¼ø Á¤·Ä·Î NEW ¹è¿­ »ý¼º
-2) ¼øÂ÷°Ë»öÀ» ÅëÇØ µî¼ö ºÎ¿©
-3) µî¼ö±îÁö ³ÖÀº ÈÄ ÀüÃ¼ Ãâ·Â
+2ì°¨ì› ë°°ì—´ ì¤‘ê°„ 50 ê¸°ë§ 30 ê³¼ì œ 20 ì´ì ì„ êµ¬í•œ ë’¤ ë“±ìˆ˜ êµ¬í•˜ê¸°
+1) ì´ì ì„ ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬ë¡œ NEW ë°°ì—´ ìƒì„±
+2) ìˆœì°¨ê²€ìƒ‰ì„ í†µí•´ ë“±ìˆ˜ ë¶€ì—¬
+3) ë“±ìˆ˜ê¹Œì§€ ë„£ì€ í›„ ì „ì²´ ì¶œë ¥
 */
 
 #include <stdio.h>
@@ -17,20 +17,20 @@ int main(void) {
 	int sort[ROWS];
 	int num = 1;
 		
-	for (int i = 0; i < ROWS; i++) { // ¹øÈ£, Á¡¼ö, ÃÑÁ¡ºÎ¿©
-				score[i][0] = num++; // ¹øÈ£
-				score[i][1] = rand() % 31; // Áß°£
-				score[i][2] = rand() % 51; // ±â¸»
-				score[i][3] = rand() % 21; // °úÁ¦
-				score[i][4] = score[i][1] + score[i][2] + score[i][3]; // ÃÑÁ¡
+	for (int i = 0; i < ROWS; i++) { // ë²ˆí˜¸, ì ìˆ˜, ì´ì ë¶€ì—¬
+				score[i][0] = num++; // ë²ˆí˜¸
+				score[i][1] = rand() % 51; // ì¤‘ê°„
+				score[i][2] = rand() % 31; // ê¸°ë§
+				score[i][3] = rand() % 21; // ê³¼ì œ
+				score[i][4] = score[i][1] + score[i][2] + score[i][3]; // ì´ì 
 	}
 	
-	for (int i = 0; i < ROWS; i++) { // Á¤·Ä¹è¿­»ý¼º
+	for (int i = 0; i < ROWS; i++) { // ì •ë ¬ë°°ì—´ìƒì„±
 		sort[i] = score[i][4];
 	}
 	
 	int temp, least;
-	for (int i = 0; i < ROWS - 1; i++) { // ³»¸²Â÷¼ø Á¤·Ä
+	for (int i = 0; i < ROWS - 1; i++) { // ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬
 		least = i;
 		for (int j = i + 1; j < ROWS; j++)
 			if (sort[j] > sort[least])
@@ -42,11 +42,11 @@ int main(void) {
 
 	int count = 0;
 	int grade = 1;
-	for (int i = 0; i < ROWS; i++) { // µî¼öºÎ¿©
+	for (int i = 0; i < ROWS; i++) { // ë“±ìˆ˜ë¶€ì—¬
 		count++;
 		for (int j = 0; j < ROWS; j++) {
-			if (i != 0) { // 1µîÀ» »Ì±âÀ§ÇØ
-				if (sort[i] != sort[i - 1])  // ¸¸ÀÏ Àü°ú °°´Ù¸é grade°ªÀ» Áõ°¡½ÃÅ°Áö ¾Ê´Â´Ù.
+			if (i != 0) { // 1ë“±ì„ ë½‘ê¸°ìœ„í•´
+				if (sort[i] != sort[i - 1])  // ë§Œì¼ ì „ê³¼ ê°™ë‹¤ë©´ gradeê°’ì„ ì¦ê°€ì‹œí‚¤ì§€ ì•ŠëŠ”ë‹¤.
 					grade = count;
 			}
 				if (score[j][4] == sort[i])
@@ -54,8 +54,8 @@ int main(void) {
 		}
 	}
 
-	printf("¹øÈ£\tÁß°£\t±â¸»\t°úÁ¦\tÃÑÁ¡\tµî¼ö\n");
-	for (int i = 0; i < ROWS; i++) { // Ãâ·Â
+	printf("ë²ˆí˜¸\tì¤‘ê°„\tê¸°ë§\tê³¼ì œ\tì´ì \të“±ìˆ˜\n");
+	for (int i = 0; i < ROWS; i++) { // ì¶œë ¥
 		for (int j = 0; j < COLS; j++) {
 			printf("%d\t ", score[i][j]);
 		}
