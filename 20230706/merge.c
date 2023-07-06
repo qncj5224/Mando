@@ -27,7 +27,7 @@ int main(void)
     return 0;
 }
 
-void rand_arry(int* A, int * check, int size) { // ·£´ıÁöÁ¤
+void rand_arry(int* A, int * check, int size) { // ëœë¤ì§€ì •
     for (int i = 0; i < size; i++){
             A[i] = rand() % 100;
         while (check[A[i]] != 0) {
@@ -38,7 +38,7 @@ void rand_arry(int* A, int * check, int size) { // ·£´ıÁöÁ¤
     check_array(check);
 }
 
-void merge_arry(int* A, int* B, int* C, int size) // º¯È¯
+void merge_arry(int* A, int* B, int* C, int size) // ë³€í™˜
 {
     int i, a, b, c, temp;
     for (a = 0, b = 0, c = 0; a < size && b < size;) {
@@ -57,7 +57,7 @@ void merge_arry(int* A, int* B, int* C, int size) // º¯È¯
         C[c++] = B[i];
 }
 
-void print_arry(char* name, int* a, int size) // Ãâ·Â
+void print_arry(char* name, int* a, int size) // ì¶œë ¥
 {
     int i;
     printf("%s[] = ", name);
@@ -68,11 +68,11 @@ void print_arry(char* name, int* a, int size) // Ãâ·Â
     printf("\n");
 }
 
-void sort_arry(int* a, int size) { // ¿À¸§Â÷¼ø
+void sort_arry(int* a, int size) { // ì˜¤ë¦„ì°¨ìˆœ
     int i, j;
     int tmp;
-    for (i = 0; i < SIZE - 1; i++) {
-        for (j = i + 1; j < SIZE; j++) {
+    for (i = 0; i < size - 1; i++) {
+        for (j = i + 1; j < size; j++) {
             if (*(a + i) > *(a + j)) {
                 tmp = *(a + i);
                 *(a + i) = *(a + j);
@@ -82,7 +82,7 @@ void sort_arry(int* a, int size) { // ¿À¸§Â÷¼ø
     }
 }
 
-void check_array(int *check) { // Ã¼Å©ÇÔ¼ö »ı¼º
+void check_array(int *check) { // ì²´í¬í•¨ìˆ˜ ìƒì„±
     for (int i = 0; i < 100; i++)
         check[i] = 0;
 }
