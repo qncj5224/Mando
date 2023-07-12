@@ -1,89 +1,86 @@
-// ÀÌ¸§ÀÌ¶û ÇÐ¹øÀ» ·£´ýÀ¸·Î ÁöÁ¤ÇÏ°Ô ¼³Á¤
-// Áß°£ 40 ±â¸» 30 °úÁ¦ 30
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define ROWS 20
-#define COLS 6
+#define NAME_LENGTH 100
+
+void random_score(struct grade* g);
+void sort_score(int* sort, struct grade* g);
+void rank_score(int* sort, struct grade* g);
+void print_score(struct grade* g);
 
 struct grade
 {
-	int hakbun;
-	char name;
-	int middle;
-	int final;
-	int report;
-	int sum;
-	int rank;
+    long hakbun;
+    char name[4];
+    int middle;
+    int final;
+    int report;
+    int sum;
+    int rank;
 };
 
 int main(void) {
-	srand((unsigned)time(NULL));
-	struct grade grade[ROWS];
-	int sort[ROWS];
-	int num = 1;
-	int j = 0, r;
+    srand((unsigned)time(NULL));
+    struct grade g[ROWS];
+    int sort[ROWS];
+    random_score(g);
+    sort_score(sort, g);
+    rank_score(sort, g);
+    print_score(g);
+    return 0;
+}
 
-	for (int i = 0; i < 26; i++)
-	{
-		while (j < 26)
-		{
-			r = rand() % 26 + 65;
-			for (j = 0; j <= i; j++)
-			{
-				if (r == grade[j].name) break;
-			}
-			if (j < i) continue;
-			else
-			{
-				grade[i].name = r;
-				break;
-			}
-		}
-	}
+void random_score(struct grade *g) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < 3; j++) { // ì´ë¦„ ì§€ì •
+            g[i].name[j] = rand() % 26 + 65;
+        }
+        g[i].name[3] = '\0'; // ë¬¸ìžì—´ ì¢…ë£Œ ë¬¸ìž
 
+        g[i].middle = rand() % 41; // ì¤‘ê°„
+        g[i].final = rand() % 31; // ê¸°ë§
+        g[i].report = rand() % 31; // ê³¼ì œ
+        g[i].sum = g[i].middle + g[i].final + g[i].report; // ì´ì 
+        g[i].hakbun = 202332001 + i;
+    }
+}
 
-	for (int i = 0; i < ROWS; i++) { // ¹øÈ£, Á¡¼ö, ÃÑÁ¡ºÎ¿©
-		grade[i].middle = rand() % 41; // Áß°£
-		grade[i].final = rand() % 31; // ±â¸»
-		grade[i].report = rand() % 31; // °úÁ¦
-		grade[i].sum = grade[i].middle + grade[i].final + grade[i].report; // ÃÑÁ¡
-		grade[i].hakbun = 202332001 + i;
-	}
+void sort_score(int *sort, struct grade *g){ // ë‚´ë¦¼ì°¨ìˆœ ì •ë ¬ í•¨ìˆ˜
+    for (int i = 0; i < ROWS; i++) { 
+        sort[i] = g[i].sum;
+    }
 
-	for (int i = 0; i < ROWS; i++) { // Á¤·Ä¹è¿­»ý¼º
-		sort[i] = grade[i].sum;
-	}
-
-	int temp, least;
-	for (int i = 0; i < ROWS - 1; i++) { // ³»¸²Â÷¼ø Á¤·Ä
-		least = i;
-		for (int j = i + 1; j < ROWS; j++)
-			if (sort[j] > sort[least])
-				least = j;
-		temp = sort[i];
-		sort[i] = sort[least];
-		sort[least] = temp;
-	}
-
-	int count = 0;
-	int score = 1;
-	for (int i = 0; i < ROWS; i++) { // µî¼öºÎ¿©
-		count++;
-		for (int j = 0; j < ROWS; j++) {
-			if (i != 0) { // 1µîÀ» »Ì±âÀ§ÇØ
-				if (sort[i] != sort[i - 1])  // ¸¸ÀÏ Àü°ú °°´Ù¸é grade°ªÀ» Áõ°¡½ÃÅ°Áö ¾Ê´Â´Ù.
-					score = count;
-			}
-			if (grade[j].sum == sort[i])
-				grade[j].rank = score;
-		}
-	}
-
-	printf("ÇÐ¹ø\t\tÀÌ¸§\tÁß°£\t±â¸»\t°úÁ¦\tÃÑÁ¡\tµî¼ö\n");
-	for (int i = 0; i < ROWS; i++) { // Ãâ·Â
-		printf("%d\t%c\t%d\t%d\t%d\t%d\t%d\t ", grade[i].hakbun, grade[i].name, grade[i].middle, grade[i].final, grade[i].report, grade[i].sum, grade[i].rank);
-		printf("\n");
-	}
+    int temp, least;
+    for (int i = 0; i < ROWS - 1; i++) { 
+        least = i;
+        for (int j = i + 1; j < ROWS; j++)
+            if (sort[j] > sort[least])
+                least = j;
+        temp = sort[i];
+        sort[i] = sort[least];
+        sort[least] = temp;
+    }
+}
+void rank_score(int *sort, struct grade *g){ // ë“±ìˆ˜ë¶€ì—¬ í•¨ìˆ˜
+    int count = 0;
+    int score = 1;
+    for (int i = 0; i < ROWS; i++) { 
+        count++;
+        for (int j = 0; j < ROWS; j++) {
+            if (i != 0) { // 1ë“±ì„ ë½‘ê¸°ìœ„í•´
+                if (sort[i] != sort[i - 1])  // ë§Œì¼ ì „ê³¼ ê°™ë‹¤ë©´ gradeê°’ì„ ì¦ê°€ì‹œí‚¤ì§€ ì•ŠëŠ”ë‹¤.
+                    score = count;
+            }
+            if (g[j].sum == sort[i])
+                g[j].rank = score;
+        }
+    }
+}
+void print_score(struct grade *g){ // ì¶œë ¥ í•¨ìˆ˜
+    printf("í•™ë²ˆ\t\tì´ë¦„\tì¤‘ê°„\tê¸°ë§\tê³¼ì œ\tì´ì \të“±ìˆ˜\n");
+    for (int i = 0; i < ROWS; i++) { // ì¶œë ¥
+        printf("%ld\t%s\t%d\t%d\t%d\t%d\t%d\n", g[i].hakbun, g[i].name, g[i].middle, g[i].final, g[i].report, g[i].sum, g[i].rank);
+    }
 }
